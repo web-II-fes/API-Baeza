@@ -59,6 +59,17 @@ router.put("/persona/:_id", (req, res, next) => {
 });
 
 
+router.delete("/persona/:_id", (req, res, next) => {
+  console.log("Viene del DELETE: ");
+  personaSchema.findByIdAndRemove(req.param._id, (err, persona) => {
+    if (err) {
+      console.log("Error: ", err);
+    }
+    console.log("Persona Borrada: ", persona);
+    res.json(persona);
+  });
+});
+
 
 // / Promises /
 

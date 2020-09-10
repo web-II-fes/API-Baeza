@@ -5,7 +5,7 @@ export const modules= {
     active :true,
     path: "./modules/personas/routes",
     route: "/modules/personas",
+   
     middleware: null
-  
     }
 };

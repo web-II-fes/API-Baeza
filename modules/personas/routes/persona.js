@@ -46,5 +46,15 @@ router.put("/persona/:_id", function (req, res, next) {
         return res.send(persona);
     });
 });
+router.delete("/persona/:_id", function (req, res, next) {
+    console.log("Viene del DELETE: ");
+    persona_1.personaSchema.findByIdAndRemove(req.param._id, function (err, persona) {
+        if (err) {
+            console.log("Error: ", err);
+        }
+        console.log("Persona Borrada: ", persona);
+        res.json(persona);
+    });
+});
 module.exports = router;
 //# sourceMappingURL=persona.js.map
