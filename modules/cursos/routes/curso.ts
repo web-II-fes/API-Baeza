@@ -4,74 +4,48 @@ import { cursoSchema } from "./../schemas/curso";
 
 const router = express.Router();
 
-//Callbacks
 
-router.get("/curso", async(req, res, next) => {
-  cursoSchema.find(function (err, curso) {
-    if (err) return;
-
-    res.send(curso);
-  });
-  
-  
-
-   
-});
-
-router.post("/curso", (req, res) => {
-//   console.log("Viene curso curso POST: ", req.body);
-  const curso = new cursoSchema(req.body);
-
-  curso.save((err, curso) => {
-    if (err) {
-      return err;
-    }
-    res.json(curso);
-  });
-});
-
-router.put("/curso/:_id", (req, res, next) => {
-//   console.log("Viene del PUT: ", req.body);
-  cursoSchema.findByIdAndUpdate(
-    req.params._id,
-    req.body,
-    { new: true },
-    (err, curso) => {
-      if (err) {
-        return err;
+router.get('/curso', async (req, res, next) => {
+  let cursos = await cursoSchema.find();  
+      try{
+      res.send(cursos);
+    } catch (err) {
+      throw err;
       }
-      console.log("Curso Nuevo: ", curso);
-      return res.send(curso);
-    }
-  );
 });
 
+router.post('/curso', async (req, res, next) => {
+  const curso = await new cursoSchema(req.body);
+  curso.save((err, curso) => {
+      try{
+          res.json(curso);
+      } catch (err){
+          return err;
+      }
+});
+  
+});
 
-
-router.delete('/curso/:_id', (req, res, next) =>{
-	cursoSchema.findByIdAndRemove(req.params._id, function(err, curso) {
-    if(err){
-        console.log("Error", err);
-	}
-  console.log('Curso Borrado: ', curso);
-  res.json(curso);
+router.put('/curso/:_id', async (req, res, next) => {
+let curso = await cursoSchema.findByIdAndUpdate(req.params._id, req.body, { new: true }, (err, curso) => {
+      
+      try{
+          res.send(curso);
+      }   catch (err) {
+          throw err;
+      }
 });
 });
 
-
-// / Promises /
-
-// /   function getPersona() {
-//   return new Promise((resolve, reject) => {
-//     let persona = personaSchema.find({ nombre: "Ignacio" }).exce();
-//     if (persona) {
-//       resolve(persona);
-//     } else {
-//       reject(console.log("No se encontro persona"));
-//     }
-//   });
-// }  /
-
-// / Async y Await */
+router.delete('/curso/:_id', async (req, res, next) => {
+let curso = await cursoSchema.findByIdAndRemove(req.params._id, (err, curso) => {
+      
+      try {
+          console.log('Curso Borrado: ', curso);
+      }   catch (err) {
+          throw err;
+      }
+});
+});
 
 export = router;

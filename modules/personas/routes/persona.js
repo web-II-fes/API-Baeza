@@ -38,7 +38,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var express = require("express");
 var persona_1 = require("./../schemas/persona");
 var router = express.Router();
-//Callbacks
 router.get("/persona", function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         persona_1.personaSchema.find(function (err, persona) {
@@ -46,37 +45,98 @@ router.get("/persona", function (req, res, next) { return __awaiter(void 0, void
                 return;
             res.send(persona);
         });
+        // router.get('/persona', async (req, res, next) => {
+        //   let personas = await personaSchema.find();
+        //   try {
+        //     let menores = await getMenores(personas);
+        //     res.send(menores);
+        //   } catch (err) {
+        //     throw err;
+        //   }
+        // });
+        // router.post("/persona",(req, res) => {
+        //   // console.log("Viene persona persona POST: ", req.body);
+        //   const persona = new personaSchema (req.body);
+        //   persona.save((err, persona) => {
+        //     if (err) {
+        //       return err;
+        //     }
+        //     res.json(persona);
+        //   });
+        // });
+        router.post('/persona', function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+            var persona;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, new persona_1.personaSchema(req.body)];
+                    case 1:
+                        persona = _a.sent();
+                        persona.save(function (err, persona) {
+                            try {
+                                res.json(persona);
+                            }
+                            catch (err) {
+                                return err;
+                            }
+                        });
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        router.put('/persona/:_id', function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+            var persona;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, persona_1.personaSchema.findByIdAndUpdate(req.params._id, req.body, { new: true }, function (err, persona) {
+                            try {
+                                res.send(persona);
+                            }
+                            catch (err) {
+                                throw err;
+                            }
+                        })];
+                    case 1:
+                        persona = _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+        //   router.put("/persona/:_id", (req, res, next) => {
+        //     console.log("Viene del PUT: ", req.body);
+        //     personaSchema.findByIdAndUpdate(
+        //       req.params._id,
+        //       req.body,
+        //       { new: true },
+        //       (err, persona) => {
+        //         if (err) {
+        //           return err;
+        //         }
+        //         console.log("Persona Nueva: ", persona);
+        //         return res.send(persona);
+        //       }
+        //     );
+        //   });
+        // });
+        router.delete('/persona/:_id', function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+            var curso;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, persona_1.personaSchema.findByIdAndRemove(req.params._id, function (err, persona) {
+                            try {
+                                console.log('Persona Borrada: ', persona);
+                            }
+                            catch (err) {
+                                throw err;
+                            }
+                        })];
+                    case 1:
+                        curso = _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        }); });
         return [2 /*return*/];
     });
 }); });
-router.post("/persona", function (req, res) {
-    console.log("Viene persona persona POST: ", req.body);
-    var persona = new persona_1.personaSchema(req.body);
-    persona.save(function (err, persona) {
-        if (err) {
-            return err;
-        }
-        res.json(persona);
-    });
-});
-router.put("/persona/:_id", function (req, res, next) {
-    console.log("Viene del PUT: ", req.body);
-    persona_1.personaSchema.findByIdAndUpdate(req.params._id, req.body, { new: true }, function (err, persona) {
-        if (err) {
-            return err;
-        }
-        console.log("Persona Nueva: ", persona);
-        return res.send(persona);
-    });
-});
-router.delete('/persona/:_id', function (req, res, next) {
-    persona_1.personaSchema.findByIdAndRemove(req.params._id, function (err, persona) {
-        if (err) {
-            console.log("Error", err);
-        }
-        console.log('Persona Borrada: ', persona);
-        res.json(persona);
-    });
-});
 module.exports = router;
 //# sourceMappingURL=persona.js.map
