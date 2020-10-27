@@ -4,15 +4,27 @@ import { cursoSchema } from "./../schemas/curso";
 
 const router = express.Router();
 
-
 router.get('/curso', async (req, res, next) => {
-  let cursos = await cursoSchema.find();  
-      try{
-      res.send(cursos);
-    } catch (err) {
-      throw err;
-      }
+
+    cursoSchema.find(function(err, curso) {
+        if (err){
+      return err;
+    } 
+        res.send(curso);
+    });
 });
+
+router.get("/cursoId/:id", async (req, res) => {
+  let idCurso = req.params.id;
+  try {
+    let cursos = await cursoSchema.findById(idCurso);
+    res.send(cursos);
+  } catch (err) {
+    throw err;
+  }
+});
+
+
 
 router.post('/curso', async (req, res, next) => {
   const curso = await new cursoSchema(req.body);
@@ -27,13 +39,13 @@ router.post('/curso', async (req, res, next) => {
 });
 
 router.put('/curso/:_id', async (req, res, next) => {
-let curso = await cursoSchema.findByIdAndUpdate(req.params._id, req.body, { new: true }, (err, curso) => {
-      
-      try{
-          res.send(curso);
-      }   catch (err) {
-          throw err;
-      }
+
+   cursoSchema.findByIdAndUpdate(req.params._id, req.body, { new: true }, (err, curso) => {
+    
+    if (err){
+        return err;
+    }
+    return res.send(curso);
 });
 });
 

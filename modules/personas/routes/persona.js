@@ -45,25 +45,6 @@ router.get("/persona", function (req, res, next) { return __awaiter(void 0, void
                 return;
             res.send(persona);
         });
-        // router.get('/persona', async (req, res, next) => {
-        //   let personas = await personaSchema.find();
-        //   try {
-        //     let menores = await getMenores(personas);
-        //     res.send(menores);
-        //   } catch (err) {
-        //     throw err;
-        //   }
-        // });
-        // router.post("/persona",(req, res) => {
-        //   // console.log("Viene persona persona POST: ", req.body);
-        //   const persona = new personaSchema (req.body);
-        //   persona.save((err, persona) => {
-        //     if (err) {
-        //       return err;
-        //     }
-        //     res.json(persona);
-        //   });
-        // });
         router.post('/persona', function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
             var persona;
             return __generator(this, function (_a) {
@@ -101,22 +82,6 @@ router.get("/persona", function (req, res, next) { return __awaiter(void 0, void
                 }
             });
         }); });
-        //   router.put("/persona/:_id", (req, res, next) => {
-        //     console.log("Viene del PUT: ", req.body);
-        //     personaSchema.findByIdAndUpdate(
-        //       req.params._id,
-        //       req.body,
-        //       { new: true },
-        //       (err, persona) => {
-        //         if (err) {
-        //           return err;
-        //         }
-        //         console.log("Persona Nueva: ", persona);
-        //         return res.send(persona);
-        //       }
-        //     );
-        //   });
-        // });
         router.delete('/persona/:_id', function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
             var curso;
             return __generator(this, function (_a) {
